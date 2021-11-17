@@ -9,8 +9,8 @@
 ## Installing OpenVAS via Docker
 
 1. Grab the container "mikesplain/openvas" from the docker registry and launch it from port 443 (for https support in a web browser).
-  - Note: I also added '$(pwd)/data:/var/lib/openvas/mgr/' to allow for volume support.
-    - Command: sudo docker run -d -p 443:443 -v $(pwd)/data:/var/lib/openvas/mgr/ --name openvas mikesplain/openvas
+  - Note: I was going to add '$(pwd)/data:/var/lib/openvas/mgr/' to allow for volume support, but I ran into some issues with the yml file so I removed it.
+    - Command: sudo docker run -d -p 443:443 --name openvas mikesplain/openvas
 2. Check out the web UI in a browser
   - Website to goto: https://localhost
   - Default login info:
@@ -20,14 +20,13 @@
 ## Creating the docker-compose.yml file from thr docker run command
 
 1. Goto https://www.composerize.com/ (courtesy of Codi)
-2. Copy and paste your Docker run command for setting up OpenVAS (mine was: -d -p 443:443 -v $(pwd)/data:/var/lib/openvas/mgr/ --name openvas mikesplain/openvas)
+2. Copy and paste your Docker run command for setting up OpenVAS (mine was: -d -p 443:443 --name openvas mikesplain/openvas)
 3. Create a new file called docker-compose.yml and copy the results from the website into it
-4. To test it works:
+4. To use it to create a new container:
     - Delete your current container
     - Run the command: sudo docker-compose up
 
 ## Run a vulnerability scan using OpenVAS
-
 ### Create and configure a target:
 1. Under the "Configuration" tab in the top menu select "Targets"
 2. Click the blue star icon at the top left of the screen (to create an new target)
@@ -47,18 +46,12 @@
 1. Click the start button next to the task
 2. Click the green refresh button in the top right corner
     - Wait...
+3. View the results
 
-## Useful Docker commands I used:
+## Useful Docker commands:
 1. Kill a container
   - Command: sudo docker kill [[containerName]]
 2. Delete all contaners (that are not running)
   - Command: sudo docker system prune -a
-
-
-
-sudo docker top openvas
-
-
-sudo docker exec -it openvas bash
-
-https://localhost/
+3. Go into the container 
+   -Command: sudo docker exec -it openvas bash
